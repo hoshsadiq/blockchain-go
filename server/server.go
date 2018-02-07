@@ -22,6 +22,7 @@ func RunServer(bc *block.Blockchain, recipientMinerAddr string, port int) error 
     http.HandleFunc("/transactions/new", post(newTransaction))
     http.HandleFunc("/chain", get(getChain))
     http.HandleFunc("/nodes/register", post(registerNode))
+    http.HandleFunc("/nodes", get(getNodes))
     http.HandleFunc("/consensus", post(consensus))
     if err := http.ListenAndServe(fmt.Sprintf("0.0.0.0:%d", port), nil); err != nil {
         return err

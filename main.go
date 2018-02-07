@@ -20,7 +20,7 @@ func main() {
             Name: "server",
             Flags: []cli.Flag{
                 cli.IntFlag{
-                    Name:  "port",
+                    Name:  "port, p",
                     Value: 8080,
                 },
             },

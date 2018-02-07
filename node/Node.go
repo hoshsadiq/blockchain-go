@@ -11,7 +11,7 @@ type Node struct {
 }
 
 func (node *Node) GetChainUrl() string {
-    return fmt.Sprintf("http://%s:%d/chain", node.Host, node.Port)
+    return fmt.Sprintf("http://%s:%s/chain", node.Host, node.Port)
 }
 
 func (node *Node) UnmarshalText(data []byte) error {

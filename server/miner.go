@@ -25,14 +25,8 @@ func newMinedResponse(blk *block.Block) *minedResponse {
 }
 
 func mine(writer http.ResponseWriter, request *http.Request) {
-    lastBlock := blockchain.GetLastBlock()
-    proof := lastBlock.ProofOfWork()
 
-    tx := block.NewTransaction("__mined", recipientMinerAddress, miner.CURRENT_BLOCK_REWARD)
-    blockchain.AddTransaction(tx)
-
-    prevHash := lastBlock.GetHash()
-    newBlock := blockchain.NewBlock(proof, prevHash)
+    newBlock := miner.Mine(blockchain, recipientMinerAddress)
 
     writeJsonResponse(writer, newMinedResponse(newBlock), http.StatusOK)
 }

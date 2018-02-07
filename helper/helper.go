@@ -26,9 +26,9 @@ func IsHashCorrectDifficulty(hash string) bool {
 }
 
 func ValidProof(lastProof int, proof int, lastHash string) bool {
-    sprintf := fmt.Sprintf("%d%d%s", lastProof, proof, lastHash)
-    hash := GetHash(sprintf)
-    log.Info(fmt.Sprintf(`Hash for "%d%d%s" results in %s`, lastProof, proof, lastHash, hash))
+    hashString := fmt.Sprintf("%d:%d:%s", lastProof, proof, lastHash)
+    hash := GetHash(hashString)
+    log.Info(fmt.Sprintf(`Hash for "%s" results in "%s"`, hashString, hash))
     return IsHashCorrectDifficulty(hash)
 }
 
@@ -42,7 +42,7 @@ func GetUrl(url string) map[string]interface{} {
     var response map[string]interface{}
 
     body, _ := ioutil.ReadAll(res.Body)
-    json.Unmarshal(body, response)
+    json.Unmarshal(body, &response)
     return response
 }
 

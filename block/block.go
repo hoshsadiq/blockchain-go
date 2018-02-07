@@ -3,8 +3,8 @@ package block
 import (
     "time"
     "github.com/hoshsadiq/tescoin/helper"
-    "fmt"
     "github.com/cloudflare/cfssl/log"
+    "encoding/json"
 )
 
 type Block struct {
@@ -46,7 +46,8 @@ func (block *Block) GetPreviousHash() string {
 }
 
 func (block *Block) GetHash() string {
-    return helper.GetHash(fmt.Sprintf("%v", block))
+    data, _ := json.Marshal(block)
+    return helper.GetHash(string(data))
 }
 
 func (block *Block) ProofOfWork() int {

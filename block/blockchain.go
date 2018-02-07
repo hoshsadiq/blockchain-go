@@ -52,8 +52,8 @@ func (blockchain *Blockchain) GetLastBlock() *Block {
     return blockchain.blocks[len(blockchain.blocks)-1]
 }
 
-func (blockchain *Blockchain) RegisterNode(node *node.Node) {
-    blockchain.nodes = append(blockchain.nodes, node)
+func (blockchain *Blockchain) RegisterNode(node node.Node) {
+    blockchain.nodes = append(blockchain.nodes, &node)
 }
 
 func (blockchain *Blockchain) Consensus() (replaced bool) {
@@ -65,7 +65,7 @@ func (blockchain *Blockchain) Consensus() (replaced bool) {
     for _, n := range neighbours {
         response := helper.GetUrl(n.GetChainUrl())
         if response != nil {
-            length := response["length"].(int)
+            length := int(response["length"].(float64))
             var blocks []*Block
             helper.ConvertInterface(response["blocks"], &blocks)
 
@@ -100,11 +100,13 @@ func IsValidChain(blocks []*Block) bool {
             continue
         }
 
-        if blk.GetPreviousHash() != lastBlock.GetHash() {
+        lastBlockHash := lastBlock.GetHash()
+        previousHash := blk.GetPreviousHash()
+        if previousHash != lastBlockHash {
             return false
         }
 
-        if !helper.ValidProof(lastBlock.GetProof(), blk.GetProof(), lastBlock.GetPreviousHash()) {
+        if !helper.ValidProof(lastBlock.GetProof(), blk.GetProof(), previousHash) {
             return false
         }
 
