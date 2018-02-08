@@ -11,6 +11,6 @@ func Mine(blockchain *block.Blockchain, blockRewardReceiver string) *block.Block
     blockchain.AddTransaction(tx)
 
     prevHash := lastBlock.GetHash()
-    proof := lastBlock.ProofOfWork()
-    return blockchain.NewBlock(proof, prevHash)
+    nonce := lastBlock.ProofOfWork()
+    return blockchain.NewBlock(nonce, prevHash)
 }

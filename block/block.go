@@ -11,16 +11,16 @@ type Block struct {
     Index        int            `json:"index"`
     Timestamp    time.Time      `json:"timestamp"`
     Transactions []*Transaction `json:"transactions"`
-    Proof        int            `json:"proof"`
+    Nonce        int            `json:"nonce"`
     PreviousHash string         `json:"previous_hash"`
 }
 
-func NewBlock(index int, timestamp time.Time, transactions []*Transaction, proof int, previousHash string) *Block {
+func NewBlock(index int, timestamp time.Time, transactions []*Transaction, nonce int, previousHash string) *Block {
     return &Block{
         Index:        index,
         Timestamp:    timestamp,
         Transactions: transactions,
-        Proof:        proof,
+        Nonce:        nonce,
         PreviousHash: previousHash,
     }
 }
@@ -37,8 +37,8 @@ func (block *Block) GetTransactions() []*Transaction {
     return block.Transactions
 }
 
-func (block *Block) GetProof() int {
-    return block.Proof
+func (block *Block) GetNonce() int {
+    return block.Nonce
 }
 
 func (block *Block) GetPreviousHash() string {
@@ -52,17 +52,17 @@ func (block *Block) GetHash() string {
 
 func (block *Block) ProofOfWork() int {
     lastHash := block.GetHash()
+    lastNonce := block.GetNonce()
 
-    proof := 0
+    nonce := 0
     for {
-        if helper.ValidProof(block.GetProof(), proof, lastHash) {
-            return proof
+        if helper.ValidNonce(lastNonce, nonce, lastHash) {
+            log.Infof("nonce found %d", nonce)
+            return nonce
         }
 
-        proof++
+        nonce++
     }
 
-    log.Infof("Proof found: %d", proof)
-
-    return proof
+    panic("something went wrong bro")
 }

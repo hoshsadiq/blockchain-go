@@ -25,12 +25,12 @@ func NewBlockchain() *Blockchain {
     return &blockchain
 }
 
-func (blockchain *Blockchain) NewBlock(proof int, previousHash string) *Block {
+func (blockchain *Blockchain) NewBlock(nonce int, previousHash string) *Block {
     if previousHash == "" {
         panic("previous hash cannot be empty")
     }
 
-    block := NewBlock(len(blockchain.blocks), time.Now(), blockchain.currentTransactions, proof, previousHash)
+    block := NewBlock(len(blockchain.blocks), time.Now(), blockchain.currentTransactions, nonce, previousHash)
 
     blockchain.currentTransactions = []*Transaction{}
     blockchain.AddBlock(block)
@@ -100,13 +100,12 @@ func IsValidChain(blocks []*Block) bool {
             continue
         }
 
-        lastBlockHash := lastBlock.GetHash()
         previousHash := blk.GetPreviousHash()
-        if previousHash != lastBlockHash {
+        if previousHash != lastBlock.GetHash() {
             return false
         }
 
-        if !helper.ValidProof(lastBlock.GetProof(), blk.GetProof(), previousHash) {
+        if !helper.ValidNonce(lastBlock.GetNonce(), blk.GetNonce(), previousHash) {
             return false
         }
 

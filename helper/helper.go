@@ -25,10 +25,10 @@ func IsHashCorrectDifficulty(hash string) bool {
     return hash[:DIFFICULTY] == difficulty
 }
 
-func ValidProof(lastProof int, proof int, lastHash string) bool {
-    hashString := fmt.Sprintf("%d:%d:%s", lastProof, proof, lastHash)
-    hash := GetHash(hashString)
-    log.Info(fmt.Sprintf(`Hash for "%s" results in "%s"`, hashString, hash))
+func ValidNonce(lastNonce int, nonce int, lastHash string) bool {
+    hashStr := fmt.Sprintf("%d:%d:%s", lastNonce, nonce, lastHash)
+    hash := GetHash(hashStr)
+    log.Infof(`Hashing "%s" resulted in "%s"`, hashStr, hash)
     return IsHashCorrectDifficulty(hash)
 }
 
