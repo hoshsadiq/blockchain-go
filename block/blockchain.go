@@ -111,7 +111,6 @@ func IsValidChain(blocks []*Block) bool {
         }
 
         lastBlock = blk
-        idx++
     }
 
     return true
@@ -124,12 +123,12 @@ func (blockchain *Blockchain) ProofOfWork(lastBlock *Block) int {
     nonce := 0
     for {
         if helper.ValidNonce(lastNonce, nonce, lastHash) {
-            log.Printf("nonce found %d", nonce)
+            log.Printf("found nonce %d", nonce)
             return nonce
         }
 
         nonce++
     }
 
-    panic("something went wrong bro")
+    panic("something went wrong")
 }

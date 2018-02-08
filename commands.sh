@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+
+echo -n "hello" | gsha256sum
+
 go build -i -o ./build/tescoin main.go
 
 ./build/tescoin server --port 8080
