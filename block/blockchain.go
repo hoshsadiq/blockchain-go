@@ -4,19 +4,20 @@ import (
     "time"
     "github.com/hoshsadiq/tescoin/node"
     "github.com/hoshsadiq/tescoin/helper"
+    "log"
 )
 
 type Blockchain struct {
-    currentTransactions []*Transaction
-    blocks              []*Block
-    nodes               []*node.Node
+    CurrentTransactions []*Transaction
+    Blocks              []*Block
+    Nodes               []*node.Node
 }
 
 func NewBlockchain() *Blockchain {
     blockchain := Blockchain{
-        currentTransactions: []*Transaction{},
-        blocks:              []*Block{},
-        nodes:               []*node.Node{},
+        CurrentTransactions: []*Transaction{},
+        Blocks:              []*Block{},
+        Nodes:               []*node.Node{},
     }
 
     // genesis block!
@@ -30,37 +31,37 @@ func (blockchain *Blockchain) NewBlock(nonce int, previousHash string) *Block {
         panic("previous hash cannot be empty")
     }
 
-    block := NewBlock(len(blockchain.blocks), time.Now(), blockchain.currentTransactions, nonce, previousHash)
+    block := NewBlock(len(blockchain.Blocks), time.Now(), blockchain.CurrentTransactions, nonce, previousHash)
 
-    blockchain.currentTransactions = []*Transaction{}
+    blockchain.CurrentTransactions = []*Transaction{}
     blockchain.AddBlock(block)
 
     return block
 }
 
 func (blockchain *Blockchain) AddBlock(block *Block) {
-    blockchain.blocks = append(blockchain.blocks, block)
+    blockchain.Blocks = append(blockchain.Blocks, block)
 }
 
 func (blockchain *Blockchain) AddTransaction(tx *Transaction) int {
-    blockchain.currentTransactions = append(blockchain.currentTransactions, tx)
+    blockchain.CurrentTransactions = append(blockchain.CurrentTransactions, tx)
 
     return blockchain.GetLastBlock().GetIndex() + 1
 }
 
 func (blockchain *Blockchain) GetLastBlock() *Block {
-    return blockchain.blocks[len(blockchain.blocks)-1]
+    return blockchain.Blocks[len(blockchain.Blocks)-1]
 }
 
 func (blockchain *Blockchain) RegisterNode(node node.Node) {
-    blockchain.nodes = append(blockchain.nodes, &node)
+    blockchain.Nodes = append(blockchain.Nodes, &node)
 }
 
 func (blockchain *Blockchain) Consensus() (replaced bool) {
     var newBlocks []*Block
-    neighbours := blockchain.nodes
+    neighbours := blockchain.Nodes
 
-    maxLength := len(blockchain.blocks)
+    maxLength := len(blockchain.Blocks)
 
     for _, n := range neighbours {
         response := helper.GetUrl(n.GetChainUrl())
@@ -77,7 +78,7 @@ func (blockchain *Blockchain) Consensus() (replaced bool) {
     }
 
     if newBlocks != nil {
-        blockchain.blocks = newBlocks
+        blockchain.Blocks = newBlocks
         return true
     }
 
@@ -85,11 +86,11 @@ func (blockchain *Blockchain) Consensus() (replaced bool) {
 }
 
 func (blockchain *Blockchain) GetBlocks() []*Block {
-    return blockchain.blocks
+    return blockchain.Blocks
 }
 
 func (blockchain *Blockchain) GetNodes() []*node.Node {
-    return blockchain.nodes
+    return blockchain.Nodes
 }
 
 func IsValidChain(blocks []*Block) bool {
@@ -114,4 +115,21 @@ func IsValidChain(blocks []*Block) bool {
     }
 
     return true
+}
+
+func (blockchain *Blockchain) ProofOfWork(lastBlock *Block) int {
+    lastHash := lastBlock.GetHash()
+    lastNonce := lastBlock.GetNonce()
+
+    nonce := 0
+    for {
+        if helper.ValidNonce(lastNonce, nonce, lastHash) {
+            log.Printf("nonce found %d", nonce)
+            return nonce
+        }
+
+        nonce++
+    }
+
+    panic("something went wrong bro")
 }

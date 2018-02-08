@@ -3,7 +3,6 @@ package block
 import (
     "time"
     "github.com/hoshsadiq/tescoin/helper"
-    "github.com/cloudflare/cfssl/log"
     "encoding/json"
 )
 
@@ -50,19 +49,3 @@ func (block *Block) GetHash() string {
     return helper.GetHash(string(data))
 }
 
-func (block *Block) ProofOfWork() int {
-    lastHash := block.GetHash()
-    lastNonce := block.GetNonce()
-
-    nonce := 0
-    for {
-        if helper.ValidNonce(lastNonce, nonce, lastHash) {
-            log.Infof("nonce found %d", nonce)
-            return nonce
-        }
-
-        nonce++
-    }
-
-    panic("something went wrong bro")
-}

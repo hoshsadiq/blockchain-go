@@ -6,17 +6,19 @@ import (
 )
 
 type chainResponse struct {
-    Blocks []*block.Block `json:"blocks"`
-    Length int            `json:"length"`
+    CurrentTransaction []*block.Transaction `json:"current_transaction"`
+    Blocks             []*block.Block       `json:"blocks"`
+    Length             int                  `json:"length"`
 }
 
-func newChainResponse(blocks []*block.Block) *chainResponse {
+func newChainResponse(blockchain *block.Blockchain) *chainResponse {
     return &chainResponse{
-        Blocks: blocks,
-        Length: len(blocks),
+        CurrentTransaction: blockchain.CurrentTransactions,
+        Blocks:             blockchain.GetBlocks(),
+        Length:             len(blockchain.GetBlocks()),
     }
 }
 
 func getChain(writer http.ResponseWriter, r *http.Request) {
-    writeJsonResponse(writer, newChainResponse(blockchain.GetBlocks()), http.StatusOK)
+    writeJsonResponse(writer, newChainResponse(blockchain), http.StatusOK)
 }

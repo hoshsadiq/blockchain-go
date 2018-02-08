@@ -7,9 +7,9 @@ import (
     "net/http"
     "encoding/json"
     "io/ioutil"
-    "github.com/cloudflare/cfssl/log"
     "encoding/hex"
     "strings"
+    "log"
 )
 
 const DIFFICULTY = 4
@@ -28,7 +28,7 @@ func IsHashCorrectDifficulty(hash string) bool {
 func ValidNonce(lastNonce int, nonce int, lastHash string) bool {
     hashStr := fmt.Sprintf("%d:%d:%s", lastNonce, nonce, lastHash)
     hash := GetHash(hashStr)
-    log.Infof(`Hashing "%s" resulted in "%s"`, hashStr, hash)
+    log.Printf(`Hashing "%s" resulted in "%s"`, hashStr, hash)
     return IsHashCorrectDifficulty(hash)
 }
 
