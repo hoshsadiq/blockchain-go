@@ -2,7 +2,7 @@ package block
 
 import (
     "time"
-    "github.com/hoshsadiq/tescoin/helper"
+    "github.com/hoshsadiq/blockchain-go/helper"
     "encoding/json"
 )
 

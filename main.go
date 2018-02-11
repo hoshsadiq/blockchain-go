@@ -4,16 +4,16 @@ import (
     "os"
     "log"
     "github.com/urfave/cli"
-    "github.com/hoshsadiq/tescoin/server"
-    "github.com/hoshsadiq/tescoin/block"
-    "github.com/hoshsadiq/tescoin/helper"
+    "github.com/hoshsadiq/blockchain-go/server"
+    "github.com/hoshsadiq/blockchain-go/block"
+    "github.com/hoshsadiq/blockchain-go/helper"
 )
 
 func main() {
     app := cli.NewApp()
-    app.Name = "tescoin"
+    app.Name = "blockchain-go"
     app.Version = "0.0.1"
-    app.Usage = "Interact with the Tescoin cryptocurrency"
+    app.Usage = "Interact with the Blockchain Go cryptocurrency"
 
     app.Commands = []cli.Command{
         {

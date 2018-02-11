@@ -1,6 +1,6 @@
 package miner
 
-import "github.com/hoshsadiq/tescoin/block"
+import "github.com/hoshsadiq/blockchain-go/block"
 
 const CURRENT_BLOCK_REWARD = 12.5
 

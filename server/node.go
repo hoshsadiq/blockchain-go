@@ -2,7 +2,7 @@ package server
 
 import (
     "net/http"
-    "github.com/hoshsadiq/tescoin/node"
+    "github.com/hoshsadiq/blockchain-go/node"
 )
 
 type nodesRegisteredResponse struct {

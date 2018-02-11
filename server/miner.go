@@ -2,8 +2,8 @@ package server
 
 import (
     "net/http"
-    "github.com/hoshsadiq/tescoin/block"
-    "github.com/hoshsadiq/tescoin/miner"
+    "github.com/hoshsadiq/blockchain-go/block"
+    "github.com/hoshsadiq/blockchain-go/miner"
 )
 
 type minedResponse struct {

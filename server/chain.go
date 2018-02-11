@@ -2,7 +2,7 @@ package server
 
 import (
     "net/http"
-    "github.com/hoshsadiq/tescoin/block"
+    "github.com/hoshsadiq/blockchain-go/block"
 )
 
 type chainResponse struct {

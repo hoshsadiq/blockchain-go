@@ -2,8 +2,8 @@ package block
 
 import (
     "time"
-    "github.com/hoshsadiq/tescoin/node"
-    "github.com/hoshsadiq/tescoin/helper"
+    "github.com/hoshsadiq/blockchain-go/node"
+    "github.com/hoshsadiq/blockchain-go/helper"
     "log"
 )
 
