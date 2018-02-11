@@ -1,0 +1,8 @@
+hash: 0b156aa0404d382b11041bb3f6a5d3e28ba4a2877e0935c3f95f4f0c4e6f45a4
+updated: 2018-02-11T17:55:03.867897Z
+imports:
+- name: github.com/google/uuid
+  version: 064e2069ce9c359c118179501254f67d7d37ba24
+- name: github.com/urfave/cli
+  version: cfb38830724cc34fedffe9a2a29fb54fa9169cd1
+testImports: []

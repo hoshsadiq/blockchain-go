@@ -10,7 +10,7 @@ full and usable implementation.
 ## Building
 You can build this app like you would any other go application.
 
-You can resolve dependencies using [glide](TODO)
+You can resolve dependencies using [glide](https://glide.sh/)
 ```bash
 $ glide install
 $ go build -i -o ./build/blockchain-go main.go

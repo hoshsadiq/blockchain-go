@@ -1,0 +1,6 @@
+package: github.com/hoshsadiq/blockchain-go
+import:
+- package: github.com/google/uuid
+  version: ^0.2.0
+- package: github.com/urfave/cli
+  version: ^1.20.0
